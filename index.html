@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Ventas Anuales</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <h2> Dashboard de Ventas Anuales</h2>
+
+  <form id="ventasForm">
+    <label>Enero: <input type="number" name="Enero" min="0" required></label>
+    <label>Febrero: <input type="number" name="Febrero" min="0" required></label>
+    <label>Marzo: <input type="number" name="Marzo" min="0" required></label>
+    <label>Abril: <input type="number" name="Abril" min="0" required></label>
+    <label>Mayo: <input type="number" name="Mayo" min="0" required></label>
+    <label>Junio: <input type="number" name="Junio" min="0" required></label>
+    <label>Julio: <input type="number" name="Julio" min="0" required></label>
+    <label>Agosto: <input type="number" name="Agosto" min="0" required></label>
+    <label>Septiembre: <input type="number" name="Septiembre" min="0" required></label>
+    <label>Octubre: <input type="number" name="Octubre" min="0" required></label>
+    <label>Noviembre: <input type="number" name="Noviembre" min="0" required></label>
+    <label>Diciembre: <input type="number" name="Diciembre" min="0" required></label>
+
+    <select id="tipoGrafico" required>
+      <option value="bar">Gráfico de Barras</option>
+      <option value="line">Gráfico de Líneas</option>
+      <option value="pie">Gráfico Circular</option>
+    </select>
+
+    <div class="acciones">
+      <button type="submit">🎨 Generar Gráfico</button>
+      <button type="button" id="guardar"> Guardar Datos</button>
+      <button type="button" id="limpiar"> Limpiar</button>
+    </div>
+  </form>
+
+  <canvas id="graficoVentas" height="100"></canvas>
+
+  <div id="resumen">
+    <h3>📊 Resumen de Ventas</h3>
+    <p><strong>Total:</strong> <span id="totalVentas">0</span></p>
+    <p><strong>Promedio mensual:</strong> <span id="promedioVentas">0</span></p>
+    <p><strong>Mes con más ventas:</strong> <span id="maxMes">-</span></p>
+    <p><strong>Mes con menos ventas:</strong> <span id="minMes">-</span></p>
+  </div>
+
+  <div class="botones-exportar">
+    <button id="exportarPDF">📄 Exportar a PDF</button>
+    <button id="exportarExcel">📊 Exportar a Excel</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
