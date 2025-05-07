@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfico de Ventas Anuales</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="number"] {
+      width: 70px;
+      padding: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    #tipoGrafico {
+      grid-column: span 3;
+      margin-top: 10px;
+      padding: 6px;
+    }
+
+    button {
+      grid-column: span 3;
+      padding: 10px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    canvas {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Formulario de Ventas Anuales</h2>
+  <form id="ventasForm">
+    <label>Enero: <input type="number" name="Enero" min="0" required></label>
+    <label>Febrero: <input type="number" name="Febrero" min="0" required></label>
+    <label>Marzo: <input type="number" name="Marzo" min="0" required></label>
+    <label>Abril: <input type="number" name="Abril" min="0" required></label>
+    <label>Mayo: <input type="number" name="Mayo" min="0" required></label>
+    <label>Junio: <input type="number" name="Junio" min="0" required></label>
+    <label>Julio: <input type="number" name="Julio" min="0" required></label>
+    <label>Agosto: <input type="number" name="Agosto" min="0" required></label>
+    <label>Septiembre: <input type="number" name="Septiembre" min="0" required></label>
+    <label>Octubre: <input type="number" name="Octubre" min="0" required></label>
+    <label>Noviembre: <input type="number" name="Noviembre" min="0" required></label>
+    <label>Diciembre: <input type="number" name="Diciembre" min="0" required></label>
+
+    <select id="tipoGrafico" required>
+      <option value="bar">Gráfico de Barras</option>
+      <option value="line">Gráfico de Líneas</option>
+      <option value="pie">Gráfico Circular</option>
+    </select>
+
+    <button type="submit">Generar Gráfico</button>
+  </form>
+
+  <canvas id="graficoVentas" height="100"></canvas>
+
+  <script>
+    const form = document.getElementById('ventasForm');
+    const ctx = document.getElementById('graficoVentas').getContext('2d');
+    let chart;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const meses = [];
+      const ventas = [];
+
+      for (let [mes, valor] of formData.entries()) {
+        meses.push(mes);
+        ventas.push(Number(valor));
+      }
+
+      const tipoGrafico = document.getElementById('tipoGrafico').value;
+
+      if (chart) chart.destroy();
+
+      chart = new Chart(ctx, {
+        type: tipoGrafico,
+        data: {
+          labels: meses,
+          datasets: [{
+            label: 'Ventas del Año',
+            data: ventas,
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(153, 102, 255, 0.6)',
+              'rgba(255, 159, 64, 0.6)'
+            ],
+            borderColor: 'rgba(0,0,0,0.1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: tipoGrafico !== 'pie' ? {
+            y: { beginAtZero: true }
+          } : {}
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
